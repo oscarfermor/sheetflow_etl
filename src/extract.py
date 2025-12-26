@@ -48,13 +48,32 @@ def extract_sheet(spreadsheet_id, worksheet):
         return pd.DataFrame()
 
 
+def get_all_worksheets(spreadsheet_id):
+    # get a list of all worksheets
+    if client is None:
+        logger.error("Google Sheets client not initialized.")
+        return pd.DataFrame()
+    if not spreadsheet_id or not isinstance(spreadsheet_id, str):
+        logger.error("Invalid spreadsheet_id: must be a non-empty string.")
+        return pd.DataFrame()
+    try:
+        sheet = client.open_by_key(spreadsheet_id)
+        all_sheets = sheet.worksheets()
+        for ws in all_sheets:
+            print(ws.title)
+
+        return pd.DataFrame(ws.get_all_records())
+    except Exception as e:
+        logger.error(f"Error extracting data from spreadsheet '{spreadsheet_id}': {e}")
+        return pd.DataFrame()
+
+
 def main():
     if not SHEET_ID:
         logger.error("Missing SHEET_ID in environment variables.")
         return
-    df = extract_sheet(SHEET_ID, "test1")
+    df = get_all_worksheets(SHEET_ID)
     logger.info(f"Extracted dataframe shape: {df.shape}")
-    print(df)
 
 
 if __name__ == "__main__":
