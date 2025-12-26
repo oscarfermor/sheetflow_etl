@@ -1,0 +1,66 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment and package management
+.env
+env/
+.venv/
+venv/
+Pipfile.lock
+poetry.lock
+
+# macOS system files
+.DS_Store
+
+# IDE/project files
+.idea/
+.vscode/
+
+# Compiled C extensions
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Data, logs, output
+/data/
+/logs/
+/output/
+
+# Google Cloud and AWS credentials/secrets
+credentials.json
+*.pem
+*.key
+*.p12
+*.crt
+*.der
+
+# Configuration/secrets (local only)
+*.env.*
+.secrets*
+config/*.local.*
+config/*_test.*
+config/*_dev.*
+config/*.secret*
+
+# Test results
+*.coverage
+*.tox
+
+# Other common files
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Ignore SQLite databases
+data/*.db
+
+# Backup files
+*~
+
+
