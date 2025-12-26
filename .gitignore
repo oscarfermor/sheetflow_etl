@@ -64,3 +64,5 @@ data/*.db
 *~
 
 
+client_secret*
+.pytest_cache
