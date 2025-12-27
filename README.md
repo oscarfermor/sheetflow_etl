@@ -47,5 +47,50 @@ Before running the pipeline, you need:
 ## 🧾 Step 4 — Install Python Dependencies
 
 ```bash
-pip install gspread google-auth pandas
+pip install -r requirements.txt
 ```
+
+## ⚙️ Configuration
+
+- Copy `env.example` to a local `.env` file and edit the values:
+   - `GOOGLE_SHEETS_ID` — the Google Sheets *spreadsheet ID* (the long id in the sheet URL between `/d/` and `/edit`).
+   - `GOOGLE_CREDENTIALS_PATH` — path to your Service Account JSON (for example: `config/credentials.json`).
+   - (Optional) `AWS_BUCKET_NAME`, `AWS_REGION_NAME`, `AWS_S3_RAW_PREFIX` — used when uploading raw files to S3.
+
+The project uses `python-dotenv` to load `.env` automatically (see `src/constants.py`).
+
+## ▶️ Running the ETL
+
+- Run the orchestrator script to perform extraction (and upload if enabled):
+
+```bash
+python src/orchestator.py
+```
+
+Note: the orchestrator reads `GOOGLE_SHEETS_ID` and `GOOGLE_CREDENTIALS_PATH` from the environment and uses `SheetsExtractor` to pull all worksheets into pandas DataFrames. S3 uploading is implemented in `src/s3_client.py` (example calls are in `src/orchestator.py` and currently commented out).
+
+## ☁️ S3 Uploads
+
+The repository provides a small `S3Client` wrapper (`src/s3_client.py`) with `upload_file`, `upload_bytes` and `list_objects`. There is also a helper `make_s3_key(sheet_id, worksheet)` in `src/utils.py` which generates a timestamped, partitioned key like:
+
+```
+google_sheets/{sheet_id}/{worksheet}/year=YYYY/month=MM/day=DD/{sheet_id}_{worksheet}_{timestamp}.csv
+```
+
+To enable uploads:
+
+1. Set `AWS_BUCKET_NAME` and `AWS_REGION_NAME` in your `.env` (or provide credentials via the usual AWS env vars / config).
+2. Instantiate `S3Client(bucket_name, region_name)` and call `upload_file` or `upload_bytes` with a suitable key.
+
+## ✅ Tests
+
+Run the test suite with `pytest` from the repository root:
+
+```bash
+pytest
+```
+
+Tests live under `src/tests` and mock external services where possible.
+
+---
+If you'd like, I can also add a short example `docker-compose` service or a small CLI wrapper to make running the orchestrator and enabling S3 uploads more straightforward. 🔧
