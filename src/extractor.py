@@ -2,12 +2,7 @@ import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from typing import List
-from dotenv import load_dotenv
 from logger import logger
-
-
-# Load variables from .env file
-load_dotenv()
 
 
 class SheetsExtractor:
@@ -24,7 +19,9 @@ class SheetsExtractor:
 
     def connect(self) -> None:
         try:
-            creds = Credentials.from_service_account_file(self.credentials_file, scopes=self.scopes)
+            creds = Credentials.from_service_account_file(
+                self.credentials_file, scopes=self.scopes
+            )
             self.client = gspread.authorize(creds)
             logger.info("Google Sheets client authorized successfully.")
         except Exception as e:
@@ -47,9 +44,13 @@ class SheetsExtractor:
                 df = pd.DataFrame(ws.get_all_records())
                 data[ws.title] = df
 
-            logger.info(f"Extracted records from in spreadsheet '{self.spreadsheet_id}'.")
+            logger.info(
+                f"Extracted records from in spreadsheet '{self.spreadsheet_id}'."
+            )
             return data
 
         except Exception as e:
-            logger.error(f"Error extracting data from in spreadsheet '{self.spreadsheet_id}': {e}")
+            logger.error(
+                f"Error extracting data from in spreadsheet '{self.spreadsheet_id}': {e}"
+            )
             return pd.DataFrame()
