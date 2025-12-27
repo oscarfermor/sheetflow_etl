@@ -41,7 +41,7 @@ class SheetsExtractor:
             data = {}
 
             for ws in ss.worksheets():
-                df = pd.DataFrame(ws.get_all_records())
+                df = pd.DataFrame(ws.get_all_values())
                 data[ws.title] = df
 
             logger.info(

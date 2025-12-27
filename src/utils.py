@@ -10,5 +10,5 @@ def make_s3_key(prefix: str, sheet_id: str, worksheet: str) -> str:
     return (
         f"{prefix}{sheet_id}/{clean_ws}/"
         f"year={now.year}/month={now.month:02d}/day={now.day:02d}/"
-        f"{sheet_id}_{clean_ws}_{timestamp}.csv"
+        f"{sheet_id}_{clean_ws}_{timestamp}"
     )
