@@ -10,4 +10,5 @@ CREDENTIALS_PATH = os.getenv("GOOGLE_CREDENTIALS_PATH", "credentials.json")
 AWS_BUCKET_NAME = os.getenv("AWS_BUCKET_NAME", "")
 AWS_REGION_NAME = os.getenv("AWS_REGION_NAME", "")
 AWS_S3_RAW_PREFIX = os.getenv("AWS_S3_RAW_PREFIX", "")
+AWS_S3_SILVER_PREFIX = os.getenv("AWS_S3_SILVER_PREFIX", "")
 DATE_FORMAT = "%Y-%m-%dT%H-%M-%S"
