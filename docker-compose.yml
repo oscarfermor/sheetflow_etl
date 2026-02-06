@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  sheetflow-etl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sheetflow-etl
+    environment:
+      # Google Sheets Configuration
+      GOOGLE_SHEETS_ID: ${GOOGLE_SHEETS_ID}
+      GOOGLE_CREDENTIALS_PATH: /app/config/credentials.json
+      
+      # AWS S3 Configuration
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION_NAME: ${AWS_REGION_NAME}
+      AWS_BUCKET_NAME: ${AWS_BUCKET_NAME}
+      AWS_S3_RAW_PREFIX: ${AWS_S3_RAW_PREFIX}
+      AWS_S3_SILVER_PREFIX: ${AWS_S3_SILVER_PREFIX}
+      
+      # Python Configuration
+      PYTHONUNBUFFERED: 1
+      PYTHONDONTWRITEBYTECODE: 1
+    
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - ./logs:/app/logs
+    
+    working_dir: /app
+    
+    networks:
+      - sheetflow-network
+
+networks:
+  sheetflow-network:
+    driver: bridge
