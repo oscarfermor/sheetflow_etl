@@ -15,6 +15,39 @@ Before running the pipeline, you need:
 - A Google Sheet you want to access
 - A Google Service Account authorized to read the sheet
 
+### Databricks Prerequisites (Optional)
+
+To export data to Databricks:
+
+- A Databricks workspace
+- A Databricks personal access token (generated in **User Settings > Developer > Access Tokens**)
+- Databricks workspace URL (e.g., `https://dbc-xxxxx.cloud.databricks.com`)
+- A target catalog and schema where tables will be created
+
+#### S3 to Databricks Connection Steps
+
+1. **Configure S3 credentials in Databricks:**
+   - In Databricks workspace, go to **Catalog > External Locations**.
+   - Create a new external location pointing to your S3 bucket.
+   - Provide your AWS access key and secret access key.
+   - Set the path to your S3 bucket (e.g., `s3://your-bucket/google_sheets/`).
+
+2. **Create a storage credential (if not using external location):**
+   - Go to **Admin Console > Credentials** in Databricks.
+   - Click **Create Storage Credential**.
+   - Select **AWS S3** and provide your AWS credentials.
+   - Name it (e.g., `s3-sheetflow-credential`).
+
+3. **Configure IAM role (recommended for production):**
+   - In AWS, create an IAM role with S3 bucket access permissions.
+   - In Databricks, use the role ARN instead of access keys for better security.
+
+4. **Load Parquet files from S3 to Databricks:**
+   - Use Spark SQL or Python API to load Parquet files:
+     ```python
+     spark.read.parquet("s3://your-bucket/google_sheets/").write.mode("overwrite").option("path", "dbfs:/path/to/table").saveAsTable("your_table")
+     ```
+
 ## 📌 Step 1 — Enable Google APIs
 
 1. Go to the **Google Cloud Console**.
@@ -81,6 +114,13 @@ To enable uploads:
 
 1. Set `AWS_BUCKET_NAME` and `AWS_REGION_NAME` in your `.env` (or provide credentials via the usual AWS env vars / config).
 2. Instantiate `S3Client(bucket_name, region_name)` and call `upload_file` or `upload_bytes` with a suitable key.
+
+## 🗄️ Databricks Export
+
+SheetFlow ETL can export extracted data directly to Databricks as Delta tables. This enables seamless integration with Databricks lakehouses for further analytics and reporting.
+
+### Results
+
 
 ## ✅ Tests
 

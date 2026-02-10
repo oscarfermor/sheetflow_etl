@@ -1,7 +1,7 @@
 # transformer.py
 import pandas as pd
 from typing import List
-from logger import logger
+from .logger import logger
 from datetime import datetime, timezone
 
 

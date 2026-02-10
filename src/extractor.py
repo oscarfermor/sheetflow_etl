@@ -2,7 +2,7 @@ import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from typing import List
-from logger import logger
+from .logger import logger
 
 
 class SheetsExtractor:
