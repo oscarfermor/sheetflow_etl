@@ -5,6 +5,7 @@ A Python ETL pipeline that extracts data from Google Sheets using a Google Servi
 ## 🚀 Project Overview
 
 SheetFlow ETL connects to one or more Google Sheets, extracts data programmatically using a service account, and standardizes it for automated processing. This is ideal for scheduled ETL jobs and data pipelines.
+<img width="1659" height="988" alt="image" src="https://github.com/user-attachments/assets/70df1a5f-4303-48b4-9178-7d95531b2c70" />
 
 ## 🧠 Prerequisites
 
@@ -120,6 +121,9 @@ To enable uploads:
 SheetFlow ETL can export extracted data directly to Databricks as Delta tables. This enables seamless integration with Databricks lakehouses for further analytics and reporting.
 
 ### Results
+<img width="1888" height="1278" alt="Screenshot 2026-02-10 at 10 23 18" src="https://github.com/user-attachments/assets/cd59249b-1745-4324-bb60-18ffd8426915" />
+
+<img width="2294" height="1269" alt="Screenshot 2026-02-10 at 10 23 32" src="https://github.com/user-attachments/assets/780f022e-2bf5-4c51-a958-ddfc58ffd17e" />
 
 
 ## ✅ Tests
