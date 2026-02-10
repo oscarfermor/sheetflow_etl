@@ -1,6 +1,6 @@
 # SheetFlow ETL
 
-A Python ETL pipeline that extracts data from Google Sheets using a Google Service Account, then stores it for further transformation and loading (AWS-ready).
+Built an automated data pipeline that extracts Google Sheets data via a Google Service Account, processes and stores cleansed parquet files in AWS S3, and makes the data queryable in Databricks for SQL analytics and dashboards.
 
 ## 🚀 Project Overview
 
