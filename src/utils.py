@@ -28,3 +28,16 @@ def make_s3_key_silver(prefix: str, sheet_id: str, worksheet: str) -> str:
         f"load_date={now.strftime('%Y-%m-%d')}/"
         f"{timestamp}.parquet"
     )
+
+
+def make_s3_key_silver(prefix: str, sheet_id: str, worksheet: str) -> str:
+    now = datetime.now(timezone.utc)
+    clean_ws = worksheet.lower().replace(" ", "_")
+    timestamp = now.strftime("%Y-%m-%dT%H-%M-%S")
+
+    return (
+        f"{prefix}"
+        f"sheet_id={sheet_id}/"
+        f"load_date={now.strftime('%Y-%m-%d')}/"
+        f"{sheet_id}_{clean_ws}_{timestamp}"
+    )
